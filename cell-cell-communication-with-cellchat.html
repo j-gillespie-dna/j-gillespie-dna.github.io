@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Chapter 6 Cell-Cell Communication with CellChat | A Gentle Introduction to Spatial Transcriptomics Analysis</title>
+  <meta name="description" content="Chapter 6 Cell-Cell Communication with CellChat | A Gentle Introduction to Spatial Transcriptomics Analysis" />
+  <meta name="generator" content="bookdown 0.42 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Chapter 6 Cell-Cell Communication with CellChat | A Gentle Introduction to Spatial Transcriptomics Analysis" />
+  <meta property="og:type" content="book" />
+  
+  
+  
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Chapter 6 Cell-Cell Communication with CellChat | A Gentle Introduction to Spatial Transcriptomics Analysis" />
+  
+  
+  
+
+<meta name="author" content="Jessica Gillespie" />
+
+
+<meta name="date" content="2025-04-05" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="spatially-variable-genes-svgs-discovery-with-spark-x.html"/>
+<link rel="next" href="future-directions-and-conclusion.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">A Minimal Book Example</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Welcome!</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#who-is-this-not-for"><i class="fa fa-check"></i><b>1.1</b> Who is this NOT for</a></li>
+<li class="chapter" data-level="1.2" data-path="index.html"><a href="index.html#so-who-is-this-actually-for-then"><i class="fa fa-check"></i><b>1.2</b> So who is this actually for then?</a></li>
+<li class="chapter" data-level="1.3" data-path="index.html"><a href="index.html#want-to-contribute"><i class="fa fa-check"></i><b>1.3</b> Want to contribute?</a></li>
+<li class="chapter" data-level="1.4" data-path="index.html"><a href="index.html#about-this-actual-site"><i class="fa fa-check"></i><b>1.4</b> About this actual site</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="introduction.html"><a href="introduction.html"><i class="fa fa-check"></i><b>2</b> Introduction</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="introduction.html"><a href="introduction.html#general-workflow"><i class="fa fa-check"></i><b>2.1</b> General Workflow</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="materials.html"><a href="materials.html"><i class="fa fa-check"></i><b>3</b> Materials</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="materials.html"><a href="materials.html#computer-infrastructure"><i class="fa fa-check"></i><b>3.1</b> Computer Infrastructure</a></li>
+<li class="chapter" data-level="3.2" data-path="materials.html"><a href="materials.html#software"><i class="fa fa-check"></i><b>3.2</b> Software</a></li>
+<li class="chapter" data-level="3.3" data-path="materials.html"><a href="materials.html#collect-necessary-files"><i class="fa fa-check"></i><b>3.3</b> Collect necessary files</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="materials.html"><a href="materials.html#space-ranger-output"><i class="fa fa-check"></i><b>3.3.1</b> Space Ranger output</a></li>
+<li class="chapter" data-level="3.3.2" data-path="materials.html"><a href="materials.html#reference-data"><i class="fa fa-check"></i><b>3.3.2</b> Reference data</a></li>
+<li class="chapter" data-level="3.3.3" data-path="materials.html"><a href="materials.html#example-datasets"><i class="fa fa-check"></i><b>3.3.3</b> Example datasets</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html"><i class="fa fa-check"></i><b>4</b> QC, Clustering, and Annotating with Seurat</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#import-and-qc"><i class="fa fa-check"></i><b>4.1</b> Import and QC</a>
+<ul>
+<li class="chapter" data-level="4.1.1" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#load-in-the-data"><i class="fa fa-check"></i><b>4.1.1</b> Load in the data</a></li>
+<li class="chapter" data-level="4.1.2" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#trim-and-filter"><i class="fa fa-check"></i><b>4.1.2</b> Trim and filter</a></li>
+<li class="chapter" data-level="4.1.3" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#normalization"><i class="fa fa-check"></i><b>4.1.3</b> Normalization</a></li>
+</ul></li>
+<li class="chapter" data-level="4.2" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#visualize-gene-expression"><i class="fa fa-check"></i><b>4.2</b> Visualize Gene Expression</a></li>
+<li class="chapter" data-level="4.3" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#dimention-reduction-and-cluster"><i class="fa fa-check"></i><b>4.3</b> Dimention Reduction and Cluster</a></li>
+<li class="chapter" data-level="4.4" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#visualizing-clusters"><i class="fa fa-check"></i><b>4.4</b> Visualizing Clusters</a></li>
+<li class="chapter" data-level="4.5" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#spot-annotating"><i class="fa fa-check"></i><b>4.5</b> Spot Annotating</a></li>
+<li class="chapter" data-level="4.6" data-path="qc-clustering-and-annotating-with-seurat.html"><a href="qc-clustering-and-annotating-with-seurat.html#save-the-data"><i class="fa fa-check"></i><b>4.6</b> Save the data</a></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="spatially-variable-genes-svgs-discovery-with-spark-x.html"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html"><i class="fa fa-check"></i><b>5</b> Spatially Variable Genes (SVGs) Discovery with SPARK-X</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="spatially-variable-genes-svgs-discovery-with-spark-x.html"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#importing-and-preparing-data"><i class="fa fa-check"></i><b>5.1</b> Importing and Preparing Data</a></li>
+<li class="chapter" data-level="5.2" data-path="spatially-variable-genes-svgs-discovery-with-spark-x.html"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#run-spark-x"><i class="fa fa-check"></i><b>5.2</b> Run SPARK-X</a></li>
+<li class="chapter" data-level="5.3" data-path="spatially-variable-genes-svgs-discovery-with-spark-x.html"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#visualizing-svgs"><i class="fa fa-check"></i><b>5.3</b> Visualizing SVGs</a></li>
+<li class="chapter" data-level="5.4" data-path="spatially-variable-genes-svgs-discovery-with-spark-x.html"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#save-data"><i class="fa fa-check"></i><b>5.4</b> Save Data</a></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="cell-cell-communication-with-cellchat.html"><a href="cell-cell-communication-with-cellchat.html"><i class="fa fa-check"></i><b>6</b> Cell-Cell Communication with CellChat</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="cell-cell-communication-with-cellchat.html"><a href="cell-cell-communication-with-cellchat.html#importing-data-and-setting-computer-options"><i class="fa fa-check"></i><b>6.1</b> Importing Data and Setting Computer Options</a></li>
+<li class="chapter" data-level="6.2" data-path="cell-cell-communication-with-cellchat.html"><a href="cell-cell-communication-with-cellchat.html#preparing-cellchat-object-and-database"><i class="fa fa-check"></i><b>6.2</b> Preparing CellChat Object and Database</a></li>
+<li class="chapter" data-level="6.3" data-path="cell-cell-communication-with-cellchat.html"><a href="cell-cell-communication-with-cellchat.html#run-cellchat"><i class="fa fa-check"></i><b>6.3</b> Run CellChat</a></li>
+<li class="chapter" data-level="6.4" data-path="cell-cell-communication-with-cellchat.html"><a href="cell-cell-communication-with-cellchat.html#visualization"><i class="fa fa-check"></i><b>6.4</b> Visualization</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="future-directions-and-conclusion.html"><a href="future-directions-and-conclusion.html"><i class="fa fa-check"></i><b>7</b> Future Directions and Conclusion</a>
+<ul>
+<li class="chapter" data-level="7.1" data-path="future-directions-and-conclusion.html"><a href="future-directions-and-conclusion.html#deconvolution"><i class="fa fa-check"></i><b>7.1</b> Deconvolution</a></li>
+<li class="chapter" data-level="7.2" data-path="future-directions-and-conclusion.html"><a href="future-directions-and-conclusion.html#conclusion"><i class="fa fa-check"></i><b>7.2</b> Conclusion</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">A Gentle Introduction to Spatial Transcriptomics Analysis</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="cell-cell-communication-with-cellchat" class="section level1 hasAnchor" number="6">
+<h1><span class="header-section-number">Chapter 6</span> Cell-Cell Communication with CellChat<a href="cell-cell-communication-with-cellchat.html#cell-cell-communication-with-cellchat" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Cells communicate by releasing and receiving molecular messages called ligands. Ligands bind to receptors, often found on cell surfaces. This binding then activates a reaction or pathway that leads to a cell function. Due to decades of research, we know which ligands typically bind to which receptors. Thanks to the scRNA-seq data for our sample we know which cells are expressing either the ligand or receptor in a canonical communication pair. As we also have spatial data available, we can use statistics to predict which cells are most likely communicating with one another based on ligand-receptor gene expression and physical distance from one another.</p>
+<p>One factor that heavily influences the results of any CCC analysis is the ligand-receptor database used. Indeed the same method can return two drastically different results merely by working from two different ligand-receptor pair lists. CellChat has its own database, CellChatDB, which is manually curated and takes into account things like subunit structure and regulatory pathways. The database is not exhaustive, however, and some ligand-receptor pairs may be missing. Users are able to update the database following the instructions <a href="https://htmlpreview.github.io/?https://github.com/jinworks/CellChat/blob/master/tutorial/Update-CellChatDB.html%5D">here</a></p>
+<p>Another important factor is your annotations previously added in the Clustering step. CellChat will group samples by these annotations to determine which groups are potentially communicating with one another. Be sure your sample is well annotated to obtain the most accurate communication network.</p>
+<p>As always, let’s load our libraries.</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="cell-cell-communication-with-cellchat.html#cb45-1" tabindex="-1"></a><span class="fu">rm</span>(<span class="at">list =</span> <span class="fu">ls</span>())</span>
+<span id="cb45-2"><a href="cell-cell-communication-with-cellchat.html#cb45-2" tabindex="-1"></a><span class="fu">library</span>(Seurat)</span>
+<span id="cb45-3"><a href="cell-cell-communication-with-cellchat.html#cb45-3" tabindex="-1"></a><span class="fu">library</span>(CellChat)</span>
+<span id="cb45-4"><a href="cell-cell-communication-with-cellchat.html#cb45-4" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb45-5"><a href="cell-cell-communication-with-cellchat.html#cb45-5" tabindex="-1"></a></span>
+<span id="cb45-6"><a href="cell-cell-communication-with-cellchat.html#cb45-6" tabindex="-1"></a>data_dir <span class="ot">&lt;-</span> <span class="st">&quot;datasets&quot;</span></span>
+<span id="cb45-7"><a href="cell-cell-communication-with-cellchat.html#cb45-7" tabindex="-1"></a>fig_dir <span class="ot">&lt;-</span> <span class="st">&quot;figures&quot;</span></span>
+<span id="cb45-8"><a href="cell-cell-communication-with-cellchat.html#cb45-8" tabindex="-1"></a></span>
+<span id="cb45-9"><a href="cell-cell-communication-with-cellchat.html#cb45-9" tabindex="-1"></a><span class="co"># This sets to the size of figures in inches</span></span>
+<span id="cb45-10"><a href="cell-cell-communication-with-cellchat.html#cb45-10" tabindex="-1"></a>two_panel <span class="ot">=</span> <span class="fl">3.5</span></span>
+<span id="cb45-11"><a href="cell-cell-communication-with-cellchat.html#cb45-11" tabindex="-1"></a>one_pnael <span class="ot">=</span> two_panel<span class="sc">/</span><span class="dv">2</span></span>
+<span id="cb45-12"><a href="cell-cell-communication-with-cellchat.html#cb45-12" tabindex="-1"></a><span class="co"># We can do automatic figure numbering.</span></span>
+<span id="cb45-13"><a href="cell-cell-communication-with-cellchat.html#cb45-13" tabindex="-1"></a>fig_num <span class="ot">=</span> <span class="dv">1</span></span></code></pre></div>
+<div id="importing-data-and-setting-computer-options" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Importing Data and Setting Computer Options<a href="cell-cell-communication-with-cellchat.html#importing-data-and-setting-computer-options" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Once again, we can load in the rds of the Seurat object from clustering. No SVG data is saved in the object from the previous section but it is not needed here. This step is very time intensive, potentially requiring several hours on a personal or office machine. Two options can speed up the process, however.</p>
+<p>R generally reserves only a small amount of RAM for calculations (~500MB) which is easily not enough for this step. We can set an option for the future.globals.maxSize to take advantage of a larger amount of RAM. The exact number will be system-dependent, here we used 32GB of RAM by providing the value 32000 * 1024 ^ 8. We can take advantage of a multicore processor by utilizing the <code>future::plan</code> function to set the number of cores we would like to use for CCC.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="cell-cell-communication-with-cellchat.html#cb46-1" tabindex="-1"></a>brain_ant <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">paste0</span>(data_dir, <span class="st">&quot;/cluster_mouse_brain.rds&quot;</span>))</span>
+<span id="cb46-2"><a href="cell-cell-communication-with-cellchat.html#cb46-2" tabindex="-1"></a><span class="fu">options</span>(<span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb46-3"><a href="cell-cell-communication-with-cellchat.html#cb46-3" tabindex="-1"></a><span class="fu">options</span>(<span class="at">future.globals.maxSize =</span> <span class="dv">32000</span><span class="sc">*</span><span class="dv">1024</span><span class="sc">^</span><span class="dv">2</span>) <span class="co"># Here we decide to use 32GB RAM out of 48 available. You can set this to whatever number you want.</span></span>
+<span id="cb46-4"><a href="cell-cell-communication-with-cellchat.html#cb46-4" tabindex="-1"></a>future<span class="sc">::</span><span class="fu">plan</span>(<span class="st">&quot;multisession&quot;</span>, <span class="at">workers =</span> <span class="dv">8</span>) <span class="co"># This is the number of cores on which you want this to run. This will depend on how many cores your CPU has. We had 12 available and used 8 here.</span></span></code></pre></div>
+</div>
+<div id="preparing-cellchat-object-and-database" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Preparing CellChat Object and Database<a href="cell-cell-communication-with-cellchat.html#preparing-cellchat-object-and-database" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There is a single command needed to create a CellChat object from a Seurat object. Preparing the database is somewhat more complicated. CellChat has two main databases, one for human and one for mouse. The databases contain a variety of communication modes including secretionary, cell-cell contact, and non-protein signaling. Depending on our cell types and desired research direction, these databases can be subset to focus only on specific interaction lists which may decrease processing time and simplify results.</p>
+<p>We also need to convert pixels in the H&amp;E image to real-world measurements using the <code>scalefactors_json.json</code> file provided in the Space Ranger output and the spot size of the 10X Visium assay (usually 55μm). A CellChat object can then be created with the aptly named <code>createCellChat</code> function.</p>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="cell-cell-communication-with-cellchat.html#cb47-1" tabindex="-1"></a>spatial.locs <span class="ot">=</span> <span class="fu">GetTissueCoordinates</span>(brain_ant, <span class="at">scale =</span> <span class="cn">NULL</span>, </span>
+<span id="cb47-2"><a href="cell-cell-communication-with-cellchat.html#cb47-2" tabindex="-1"></a>                                    <span class="at">cols =</span> <span class="fu">c</span>(<span class="st">&quot;imagerow&quot;</span>, <span class="st">&quot;imagecol&quot;</span>))</span>
+<span id="cb47-3"><a href="cell-cell-communication-with-cellchat.html#cb47-3" tabindex="-1"></a>spatial.locs <span class="ot">&lt;-</span> spatial.locs[,<span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>)]</span>
+<span id="cb47-4"><a href="cell-cell-communication-with-cellchat.html#cb47-4" tabindex="-1"></a>scalefactors <span class="ot">=</span> jsonlite<span class="sc">::</span><span class="fu">fromJSON</span>(<span class="at">txt =</span> <span class="fu">file.path</span>(<span class="fu">paste0</span>(data_dir, <span class="st">&quot;/spatial/scalefactors_json.json&quot;</span>)))</span>
+<span id="cb47-5"><a href="cell-cell-communication-with-cellchat.html#cb47-5" tabindex="-1"></a>spot.size <span class="ot">=</span> <span class="dv">55</span> <span class="co"># The current spot size (um) in 10X Visium. This is assay specific and you should double check this value!</span></span>
+<span id="cb47-6"><a href="cell-cell-communication-with-cellchat.html#cb47-6" tabindex="-1"></a>conversion.factor <span class="ot">=</span> spot.size<span class="sc">/</span>scalefactors<span class="sc">$</span>spot_diameter_fullres</span>
+<span id="cb47-7"><a href="cell-cell-communication-with-cellchat.html#cb47-7" tabindex="-1"></a>spatial.factors <span class="ot">=</span> <span class="fu">data.frame</span>(<span class="at">ratio =</span> conversion.factor, <span class="at">tol =</span> spot.size<span class="sc">/</span><span class="dv">2</span>)</span>
+<span id="cb47-8"><a href="cell-cell-communication-with-cellchat.html#cb47-8" tabindex="-1"></a>d.spatial <span class="ot">&lt;-</span> <span class="fu">computeCellDistance</span>(<span class="at">coordinates =</span> spatial.locs, </span>
+<span id="cb47-9"><a href="cell-cell-communication-with-cellchat.html#cb47-9" tabindex="-1"></a>                                 <span class="at">ratio =</span> spatial.factors<span class="sc">$</span>ratio, </span>
+<span id="cb47-10"><a href="cell-cell-communication-with-cellchat.html#cb47-10" tabindex="-1"></a>                                 <span class="at">tol =</span> spatial.factors<span class="sc">$</span>tol)</span>
+<span id="cb47-11"><a href="cell-cell-communication-with-cellchat.html#cb47-11" tabindex="-1"></a><span class="fu">min</span>(d.spatial[d.spatial<span class="sc">!=</span><span class="dv">0</span>]) <span class="co"># this value should approximately equal 100um for 10X Visium data</span></span></code></pre></div>
+<pre><code>## [1] 84.21583</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="cell-cell-communication-with-cellchat.html#cb49-1" tabindex="-1"></a><span class="co"># create the CellChat object</span></span>
+<span id="cb49-2"><a href="cell-cell-communication-with-cellchat.html#cb49-2" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">createCellChat</span>(brain_ant, <span class="at">group.by =</span> <span class="st">&quot;sctype_classification&quot;</span>,</span>
+<span id="cb49-3"><a href="cell-cell-communication-with-cellchat.html#cb49-3" tabindex="-1"></a>                           <span class="at">assay =</span> <span class="st">&quot;SCT&quot;</span>, <span class="at">coordinates =</span> spatial.locs,</span>
+<span id="cb49-4"><a href="cell-cell-communication-with-cellchat.html#cb49-4" tabindex="-1"></a>                           <span class="at">spatial.factors =</span> spatial.factors)</span></code></pre></div>
+<pre><code>## [1] &quot;Create a CellChat object from a Seurat object&quot;
+## The `meta.data` slot in the Seurat object is used as cell meta information</code></pre>
+<pre><code>## Set cell identities for the new CellChat object 
+## The cell groups used for CellChat analysis are  Astrocytes, Dopaminergic neurons, GABAergic neurons, Glutamatergic neurons, Immature neurons, Neural Progenitor cells, Neuroblasts, Oligodendrocytes, Radial glial cells</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="cell-cell-communication-with-cellchat.html#cb52-1" tabindex="-1"></a>CellChatDB <span class="ot">&lt;-</span> CellChatDB.mouse</span>
+<span id="cb52-2"><a href="cell-cell-communication-with-cellchat.html#cb52-2" tabindex="-1"></a><span class="co"># use all CellChatDB for cell-cell communication analysis. We do not suggest to use it in this way because CellChatDB v2 includes &quot;Non-protein Signaling&quot; (i.e., metabolic and synaptic signaling) that can be only estimated from gene expression data.</span></span>
+<span id="cb52-3"><a href="cell-cell-communication-with-cellchat.html#cb52-3" tabindex="-1"></a>CellChatDB.use <span class="ot">&lt;-</span> CellChatDB</span>
+<span id="cb52-4"><a href="cell-cell-communication-with-cellchat.html#cb52-4" tabindex="-1"></a><span class="co"># Or optional subsetting</span></span>
+<span id="cb52-5"><a href="cell-cell-communication-with-cellchat.html#cb52-5" tabindex="-1"></a><span class="co"># CellChatDB.use &lt;- subsetDB(CellChatDB, search = &quot;Secreted Signaling&quot;, key = &quot;annotation&quot;)</span></span>
+<span id="cb52-6"><a href="cell-cell-communication-with-cellchat.html#cb52-6" tabindex="-1"></a><span class="co"># set the used database in the object</span></span>
+<span id="cb52-7"><a href="cell-cell-communication-with-cellchat.html#cb52-7" tabindex="-1"></a>cellChat<span class="sc">@</span>DB <span class="ot">&lt;-</span> CellChatDB.use</span></code></pre></div>
+</div>
+<div id="run-cellchat" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Run CellChat<a href="cell-cell-communication-with-cellchat.html#run-cellchat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Before finding all ligand-receptor pairs, over-expressed genes and interactions are found to infer the cell state-specific communications using <code>identifyOverExpressedGenes</code> and <code>identifyOverExpressedInteractions</code> respectively. If the sequencing depth is shallow, we can use <code>smoothData</code> to smooth genes’ expressions based on neighbors’ validated and high-confidence protein-protein network. If smoothing is used, the parameter <code>raw = FALSE</code> should be added to the <code>computeCommunProb</code> function.</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="cell-cell-communication-with-cellchat.html#cb53-1" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">subsetData</span>(cellChat) <span class="co"># This step is necessary even if using the whole database</span></span>
+<span id="cb53-2"><a href="cell-cell-communication-with-cellchat.html#cb53-2" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">identifyOverExpressedGenes</span>(cellChat)</span>
+<span id="cb53-3"><a href="cell-cell-communication-with-cellchat.html#cb53-3" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">identifyOverExpressedInteractions</span>(cellChat, <span class="at">variable.both =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb53-4"><a href="cell-cell-communication-with-cellchat.html#cb53-4" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="cell-cell-communication-with-cellchat.html#cb53-5" tabindex="-1"></a><span class="co"># project gene expression data onto PPI (Optional: when running it, USER should set `raw.use = FALSE` in the function `computeCommunProb()` in order to use the projected data)</span></span>
+<span id="cb53-6"><a href="cell-cell-communication-with-cellchat.html#cb53-6" tabindex="-1"></a><span class="co">#cellChat &lt;- smoothData(cellChat, adj = PPI.mouse)</span></span></code></pre></div>
+<p>CellChat offers two options for calculating ligand-receptor pairs, <code>triMean</code> which produces fewer but stronger interactions, and <code>truncatedMean</code> to identify weaker signaling. We use our chosen option in <code>computeCommunProb</code> to run the calculation. This function can take several hours to run, especially if using a personal computer instead of sever cluster. Thankfully, a progress bar is conveniently displayed.</p>
+<p>After our list is obtained, we filter out groups that have only a few cells on which to predict communication with <code>filterCommunication</code>. Next, <code>computeCommunProbPathway</code> will use the ligand-receptor interactions to calculate the communication probability on a signaling pathway and can then aggregate an entire communication network using <code>aggregateNet</code>. As the previous step takes a significant amount of time, it is best to save our analysis as an rds file.</p>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="cell-cell-communication-with-cellchat.html#cb54-1" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">computeCommunProb</span>(cellChat, <span class="at">type =</span> <span class="st">&quot;triMean&quot;</span>, <span class="at">distance.use =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb54-2"><a href="cell-cell-communication-with-cellchat.html#cb54-2" tabindex="-1"></a>                              <span class="at">interaction.range =</span> <span class="dv">250</span>, <span class="at">scale.distance =</span> <span class="fl">0.01</span>,</span>
+<span id="cb54-3"><a href="cell-cell-communication-with-cellchat.html#cb54-3" tabindex="-1"></a>                              <span class="at">contact.dependent =</span> <span class="cn">TRUE</span>, <span class="at">contact.range =</span> <span class="dv">84</span>)</span>
+<span id="cb54-4"><a href="cell-cell-communication-with-cellchat.html#cb54-4" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">filterCommunication</span>(cellChat, <span class="at">min.cells =</span> <span class="dv">10</span>)</span>
+<span id="cb54-5"><a href="cell-cell-communication-with-cellchat.html#cb54-5" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">computeCommunProbPathway</span>(cellChat)</span>
+<span id="cb54-6"><a href="cell-cell-communication-with-cellchat.html#cb54-6" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">aggregateNet</span>(cellChat)</span>
+<span id="cb54-7"><a href="cell-cell-communication-with-cellchat.html#cb54-7" tabindex="-1"></a></span>
+<span id="cb54-8"><a href="cell-cell-communication-with-cellchat.html#cb54-8" tabindex="-1"></a><span class="co"># That took a long time. Let&#39;s save this object for easy laoding later!</span></span>
+<span id="cb54-9"><a href="cell-cell-communication-with-cellchat.html#cb54-9" tabindex="-1"></a><span class="fu">saveRDS</span>(cellChat, <span class="at">file =</span> <span class="fu">paste0</span>(data_dir, <span class="st">&quot;/cellchat_visium_mouse_cortex.rds&quot;</span>))</span></code></pre></div>
+</div>
+<div id="visualization" class="section level2 hasAnchor" number="6.4">
+<h2><span class="header-section-number">6.4</span> Visualization<a href="cell-cell-communication-with-cellchat.html#visualization" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are many figures and graphs that can be created for CCC analysis. First, using <code>netVisual-circle</code>, we can view communications between each cell group of cells from the clustering step. The vertex and line weights can be set to a number of parameters, including the number of interactions and the strength of the interactions. The same information can alternatively be viewed as heatmaps using “netVisual_heatmap”.</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="cell-cell-communication-with-cellchat.html#cb55-1" tabindex="-1"></a><span class="co"># Remove the # from the line below to load your previous CellChat data if you don&#39;t want to rerun the whole thing!</span></span>
+<span id="cb55-2"><a href="cell-cell-communication-with-cellchat.html#cb55-2" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="fu">paste0</span>(data_dir, <span class="st">&quot;/cellchat_visium_mouse_cortex.rds&quot;</span>))</span>
+<span id="cb55-3"><a href="cell-cell-communication-with-cellchat.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="cell-cell-communication-with-cellchat.html#cb55-4" tabindex="-1"></a><span class="co"># These aren&#39;t ggplot objects so we have to save them a bit differently</span></span>
+<span id="cb55-5"><a href="cell-cell-communication-with-cellchat.html#cb55-5" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="dv">2</span>, <span class="at">height =</span> two_panel<span class="sc">*</span><span class="dv">2</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb55-6"><a href="cell-cell-communication-with-cellchat.html#cb55-6" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb55-7"><a href="cell-cell-communication-with-cellchat.html#cb55-7" tabindex="-1"></a>count_plot <span class="ot">&lt;-</span> <span class="fu">netVisual_circle</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>count, </span>
+<span id="cb55-8"><a href="cell-cell-communication-with-cellchat.html#cb55-8" tabindex="-1"></a>                 <span class="at">vertex.weight =</span> <span class="fu">rowSums</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>count),</span>
+<span id="cb55-9"><a href="cell-cell-communication-with-cellchat.html#cb55-9" tabindex="-1"></a>                 <span class="at">weight.scale =</span> <span class="cn">TRUE</span>, <span class="at">label.edge=</span> <span class="cn">FALSE</span>, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb55-10"><a href="cell-cell-communication-with-cellchat.html#cb55-10" tabindex="-1"></a>count_plot</span>
+<span id="cb55-11"><a href="cell-cell-communication-with-cellchat.html#cb55-11" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="cell-cell-communication-with-cellchat.html#cb57-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb57-2"><a href="cell-cell-communication-with-cellchat.html#cb57-2" tabindex="-1"></a><span class="fu">netVisual_circle</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>count, </span>
+<span id="cb57-3"><a href="cell-cell-communication-with-cellchat.html#cb57-3" tabindex="-1"></a>                 <span class="at">vertex.weight =</span> <span class="fu">rowSums</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>count),</span>
+<span id="cb57-4"><a href="cell-cell-communication-with-cellchat.html#cb57-4" tabindex="-1"></a>                 <span class="at">weight.scale =</span> <span class="cn">TRUE</span>, <span class="at">label.edge=</span> <span class="cn">FALSE</span>, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_full-1.png" width="672" /></p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="cell-cell-communication-with-cellchat.html#cb58-1" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="dv">2</span>, <span class="at">height =</span> two_panel<span class="sc">*</span><span class="dv">2</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb58-2"><a href="cell-cell-communication-with-cellchat.html#cb58-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb58-3"><a href="cell-cell-communication-with-cellchat.html#cb58-3" tabindex="-1"></a>int_plot <span class="ot">&lt;-</span> <span class="fu">netVisual_circle</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>weight, <span class="at">vertex.weight =</span></span>
+<span id="cb58-4"><a href="cell-cell-communication-with-cellchat.html#cb58-4" tabindex="-1"></a>                 <span class="fu">rowSums</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>weight), <span class="at">weight.scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb58-5"><a href="cell-cell-communication-with-cellchat.html#cb58-5" tabindex="-1"></a>                 <span class="at">label.edge=</span> <span class="cn">FALSE</span>, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span>
+<span id="cb58-6"><a href="cell-cell-communication-with-cellchat.html#cb58-6" tabindex="-1"></a>int_plot</span>
+<span id="cb58-7"><a href="cell-cell-communication-with-cellchat.html#cb58-7" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="cell-cell-communication-with-cellchat.html#cb60-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb60-2"><a href="cell-cell-communication-with-cellchat.html#cb60-2" tabindex="-1"></a><span class="fu">netVisual_circle</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>weight, <span class="at">vertex.weight =</span></span>
+<span id="cb60-3"><a href="cell-cell-communication-with-cellchat.html#cb60-3" tabindex="-1"></a>                 <span class="fu">rowSums</span>(cellChat<span class="sc">@</span>net<span class="sc">$</span>weight), <span class="at">weight.scale =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb60-4"><a href="cell-cell-communication-with-cellchat.html#cb60-4" tabindex="-1"></a>                 <span class="at">label.edge=</span> <span class="cn">FALSE</span>, <span class="at">margin =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>,<span class="dv">0</span>))</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_full-2.png" width="672" /></p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="cell-cell-communication-with-cellchat.html#cb61-1" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="fl">1.5</span>, <span class="at">height =</span> two_panel, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb61-2"><a href="cell-cell-communication-with-cellchat.html#cb61-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb61-3"><a href="cell-cell-communication-with-cellchat.html#cb61-3" tabindex="-1"></a>count_map <span class="ot">&lt;-</span> <span class="fu">netVisual_heatmap</span>(cellChat, <span class="at">measure =</span> <span class="st">&quot;count&quot;</span>, <span class="at">color.heatmap =</span> <span class="st">&quot;Blues&quot;</span>)</span>
+<span id="cb61-4"><a href="cell-cell-communication-with-cellchat.html#cb61-4" tabindex="-1"></a>count_map</span>
+<span id="cb61-5"><a href="cell-cell-communication-with-cellchat.html#cb61-5" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="cell-cell-communication-with-cellchat.html#cb63-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb63-2"><a href="cell-cell-communication-with-cellchat.html#cb63-2" tabindex="-1"></a><span class="fu">netVisual_heatmap</span>(cellChat, <span class="at">measure =</span> <span class="st">&quot;count&quot;</span>, <span class="at">color.heatmap =</span> <span class="st">&quot;Blues&quot;</span>)</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_full-3.png" width="672" /></p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="cell-cell-communication-with-cellchat.html#cb64-1" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="fl">1.5</span>, <span class="at">height =</span> two_panel, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb64-2"><a href="cell-cell-communication-with-cellchat.html#cb64-2" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd=</span><span class="cn">TRUE</span>)</span>
+<span id="cb64-3"><a href="cell-cell-communication-with-cellchat.html#cb64-3" tabindex="-1"></a>weight_map <span class="ot">&lt;-</span> <span class="fu">netVisual_heatmap</span>(cellChat, <span class="at">measure =</span> <span class="st">&quot;weight&quot;</span>, <span class="at">color.heatmap =</span> <span class="st">&quot;Blues&quot;</span>)</span>
+<span id="cb64-4"><a href="cell-cell-communication-with-cellchat.html#cb64-4" tabindex="-1"></a>weight_map</span>
+<span id="cb64-5"><a href="cell-cell-communication-with-cellchat.html#cb64-5" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="cell-cell-communication-with-cellchat.html#cb66-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb66-2"><a href="cell-cell-communication-with-cellchat.html#cb66-2" tabindex="-1"></a><span class="fu">netVisual_heatmap</span>(cellChat, <span class="at">measure =</span> <span class="st">&quot;weight&quot;</span>, <span class="at">color.heatmap =</span> <span class="st">&quot;Blues&quot;</span>)</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_full-4.png" width="672" /></p>
+<p>If we are interested in a particular signaling pathway, a list of communication probabilities is available in the CellChat object metadata. We can look at the probability of interactions between cell groups involved in the NOTCH pathway with the <code>netVisual_aggregate</code> function (Figure 8).</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="cell-cell-communication-with-cellchat.html#cb67-1" tabindex="-1"></a><span class="co"># Visualize pathways</span></span>
+<span id="cb67-2"><a href="cell-cell-communication-with-cellchat.html#cb67-2" tabindex="-1"></a>cellChat<span class="sc">@</span>netP<span class="sc">$</span>pathways</span></code></pre></div>
+<pre><code>##   [1] &quot;Glutamate&quot;        &quot;GABA-A&quot;           &quot;GABA-B&quot;          
+##   [4] &quot;NRXN&quot;             &quot;CypA&quot;             &quot;ADGRL&quot;           
+##   [7] &quot;PTPR&quot;             &quot;CADM&quot;             &quot;PTN&quot;             
+##  [10] &quot;PSAP&quot;             &quot;LAMININ&quot;          &quot;APP&quot;             
+##  [13] &quot;MK&quot;               &quot;NCAM&quot;             &quot;CNTN&quot;            
+##  [16] &quot;ADGRB&quot;            &quot;SLITRK&quot;           &quot;EPHB&quot;            
+##  [19] &quot;GAP&quot;              &quot;COLLAGEN&quot;         &quot;MAG&quot;             
+##  [22] &quot;CLDN&quot;             &quot;ApoE&quot;             &quot;NEGR&quot;            
+##  [25] &quot;SEMA4&quot;            &quot;OPIOID&quot;           &quot;SEMA6&quot;           
+##  [28] &quot;GAS&quot;              &quot;VTN&quot;              &quot;CCK&quot;             
+##  [31] &quot;GRN&quot;              &quot;FGF&quot;              &quot;FN1&quot;             
+##  [34] &quot;VEGF&quot;             &quot;NGL&quot;              &quot;EPHA&quot;            
+##  [37] &quot;NTS&quot;              &quot;AGRN&quot;             &quot;RELN&quot;            
+##  [40] &quot;JAM&quot;              &quot;NPY&quot;              &quot;2-AG&quot;            
+##  [43] &quot;CDH&quot;              &quot;SOMATOSTATIN&quot;     &quot;BMP&quot;             
+##  [46] &quot;NECTIN&quot;           &quot;CX3C&quot;             &quot;Cholesterol&quot;     
+##  [49] &quot;L1CAM&quot;            &quot;SEMA3&quot;            &quot;UNC5&quot;            
+##  [52] &quot;CSF&quot;              &quot;THBS&quot;             &quot;SEMA5&quot;           
+##  [55] &quot;WNT&quot;              &quot;SPP1&quot;             &quot;TENASCIN&quot;        
+##  [58] &quot;NOTCH&quot;            &quot;NT&quot;               &quot;Desmosterol&quot;     
+##  [61] &quot;ENHO&quot;             &quot;PACAP&quot;            &quot;PTPRM&quot;           
+##  [64] &quot;SEMA7&quot;            &quot;SLIT&quot;             &quot;MPZ&quot;             
+##  [67] &quot;Testosterone&quot;     &quot;FLRT&quot;             &quot;Netrin&quot;          
+##  [70] &quot;TAC&quot;              &quot;MIF&quot;              &quot;IGF&quot;             
+##  [73] &quot;Adenosine&quot;        &quot;ncWNT&quot;            &quot;PDGF&quot;            
+##  [76] &quot;SerotoninDopamin&quot; &quot;ESAM&quot;             &quot;NRG&quot;             
+##  [79] &quot;VIP&quot;              &quot;TGFb&quot;             &quot;ADGRG&quot;           
+##  [82] &quot;KIT&quot;              &quot;HSPG&quot;             &quot;Glycine&quot;         
+##  [85] &quot;ACTIVIN&quot;          &quot;AGT&quot;              &quot;TULP&quot;            
+##  [88] &quot;MHC-II&quot;           &quot;VISFATIN&quot;         &quot;CXCL&quot;            
+##  [91] &quot;IGFBP&quot;            &quot;GDF&quot;              &quot;EGF&quot;             
+##  [94] &quot;VISTA&quot;            &quot;DHT&quot;              &quot;CRH&quot;             
+##  [97] &quot;RBP4&quot;             &quot;LIFR&quot;             &quot;PCDH&quot;            
+## [100] &quot;CSPG4&quot;            &quot;NPR1&quot;             &quot;OCLN&quot;            
+## [103] &quot;PECAM1&quot;           &quot;ANGPTL&quot;           &quot;DHEAS&quot;</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb69-1"><a href="cell-cell-communication-with-cellchat.html#cb69-1" tabindex="-1"></a>pathways.show <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;NOTCH&quot;</span>) </span>
+<span id="cb69-2"><a href="cell-cell-communication-with-cellchat.html#cb69-2" tabindex="-1"></a><span class="co"># Circle plot</span></span>
+<span id="cb69-3"><a href="cell-cell-communication-with-cellchat.html#cb69-3" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="fl">1.5</span>, <span class="at">height =</span> two_panel<span class="sc">*</span><span class="fl">1.5</span>, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb69-4"><a href="cell-cell-communication-with-cellchat.html#cb69-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">xpd =</span> <span class="cn">TRUE</span>) <span class="co"># `xpd = TRUE` should be added to show the title</span></span>
+<span id="cb69-5"><a href="cell-cell-communication-with-cellchat.html#cb69-5" tabindex="-1"></a>pathway <span class="ot">&lt;-</span> <span class="fu">netVisual_aggregate</span>(cellChat, <span class="at">signaling =</span> pathways.show, <span class="at">layout =</span> <span class="st">&quot;circle&quot;</span>)</span>
+<span id="cb69-6"><a href="cell-cell-communication-with-cellchat.html#cb69-6" tabindex="-1"></a>pathway</span>
+<span id="cb69-7"><a href="cell-cell-communication-with-cellchat.html#cb69-7" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="cell-cell-communication-with-cellchat.html#cb71-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb71-2"><a href="cell-cell-communication-with-cellchat.html#cb71-2" tabindex="-1"></a><span class="fu">netVisual_aggregate</span>(cellChat, <span class="at">signaling =</span> pathways.show, <span class="at">layout =</span> <span class="st">&quot;circle&quot;</span>)</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_path-1.png" width="672" /></p>
+<p>Finally, we can explore the “centrality” of a network. This tells us which nodes are active in the most pathways and therefore could be more “important”. The calculation is done with “netAnalysis_computeCentrality” and visualized with <code>netAnalysis_signalingRole_network</code> (Figure 9).</p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="cell-cell-communication-with-cellchat.html#cb72-1" tabindex="-1"></a><span class="co"># Compute the network centrality scores</span></span>
+<span id="cb72-2"><a href="cell-cell-communication-with-cellchat.html#cb72-2" tabindex="-1"></a>cellChat <span class="ot">&lt;-</span> <span class="fu">netAnalysis_computeCentrality</span>(cellChat, <span class="at">slot.name =</span> <span class="st">&quot;netP&quot;</span>) <span class="co"># the slot &#39;netP&#39; means the inferred intercellular communication network of signaling pathways</span></span>
+<span id="cb72-3"><a href="cell-cell-communication-with-cellchat.html#cb72-3" tabindex="-1"></a><span class="co"># Visualize the computed centrality scores using heatmap, allowing ready identification of major signaling roles of cell groups</span></span>
+<span id="cb72-4"><a href="cell-cell-communication-with-cellchat.html#cb72-4" tabindex="-1"></a><span class="fu">png</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(fig_dir, <span class="st">&quot;/Figure_ccc_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">width =</span> two_panel<span class="sc">*</span><span class="dv">2</span>, <span class="at">height =</span> two_panel, <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">res =</span> <span class="dv">300</span>)</span>
+<span id="cb72-5"><a href="cell-cell-communication-with-cellchat.html#cb72-5" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb72-6"><a href="cell-cell-communication-with-cellchat.html#cb72-6" tabindex="-1"></a>cent_map <span class="ot">&lt;-</span> <span class="fu">netAnalysis_signalingRole_network</span>(cellChat, <span class="at">signaling =</span> pathways.show)</span>
+<span id="cb72-7"><a href="cell-cell-communication-with-cellchat.html#cb72-7" tabindex="-1"></a>cent_map</span></code></pre></div>
+<pre><code>## NULL</code></pre>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="cell-cell-communication-with-cellchat.html#cb74-1" tabindex="-1"></a><span class="fu">dev.off</span>()</span></code></pre></div>
+<pre><code>## png 
+##   2</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb76-1"><a href="cell-cell-communication-with-cellchat.html#cb76-1" tabindex="-1"></a>fig_num <span class="ot">&lt;-</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb76-2"><a href="cell-cell-communication-with-cellchat.html#cb76-2" tabindex="-1"></a><span class="fu">netAnalysis_signalingRole_network</span>(cellChat, <span class="at">signaling =</span> pathways.show)</span></code></pre></div>
+<p><img src="05-CCC_files/figure-html/vis_network-1.png" width="672" /></p>
+<p>As we saved the CellChat object after the analysis and have not added to it since then, we do not need to save it again here.
+<br>
+<br>
+<br></p>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb77-1"><a href="cell-cell-communication-with-cellchat.html#cb77-1" tabindex="-1"></a><span class="fu">sessionInfo</span>()</span></code></pre></div>
+<pre><code>## R version 4.4.3 (2025-02-28)
+## Platform: x86_64-pc-linux-gnu
+## Running under: Linux Mint 21
+## 
+## Matrix products: default
+## BLAS:   /usr/lib/x86_64-linux-gnu/blas/libblas.so.3.10.0 
+## LAPACK: /usr/lib/x86_64-linux-gnu/lapack/liblapack.so.3.10.0
+## 
+## locale:
+##  [1] LC_CTYPE=en_US.UTF-8       LC_NUMERIC=C              
+##  [3] LC_TIME=en_US.UTF-8        LC_COLLATE=en_US.UTF-8    
+##  [5] LC_MONETARY=en_US.UTF-8    LC_MESSAGES=en_US.UTF-8   
+##  [7] LC_PAPER=en_US.UTF-8       LC_NAME=C                 
+##  [9] LC_ADDRESS=C               LC_TELEPHONE=C            
+## [11] LC_MEASUREMENT=en_US.UTF-8 LC_IDENTIFICATION=C       
+## 
+## time zone: America/New_York
+## tzcode source: system (glibc)
+## 
+## attached base packages:
+## [1] stats     graphics  grDevices utils     datasets  methods   base     
+## 
+## other attached packages:
+##  [1] patchwork_1.3.0     CellChat_2.1.2      Biobase_2.66.0     
+##  [4] BiocGenerics_0.52.0 ggplot2_3.5.1       igraph_2.1.4       
+##  [7] dplyr_1.1.4         Seurat_5.2.1        SeuratObject_5.0.2 
+## [10] sp_2.2-0           
+## 
+## loaded via a namespace (and not attached):
+##   [1] RcppAnnoy_0.0.22       splines_4.4.3          later_1.4.1           
+##   [4] tibble_3.2.1           polyclip_1.10-7        ggnetwork_0.5.13      
+##   [7] fastDummies_1.7.5      lifecycle_1.0.4        rstatix_0.7.2         
+##  [10] doParallel_1.0.17      globals_0.16.3         lattice_0.22-5        
+##  [13] MASS_7.3-64            backports_1.5.0        magrittr_2.0.3        
+##  [16] plotly_4.10.4          sass_0.4.9             rmarkdown_2.29        
+##  [19] jquerylib_0.1.4        yaml_2.3.10            httpuv_1.6.15         
+##  [22] NMF_0.28               sctransform_0.4.1      spam_2.11-1           
+##  [25] spatstat.sparse_3.1-0  reticulate_1.41.0      cowplot_1.1.3         
+##  [28] pbapply_1.7-2          RColorBrewer_1.1-3     abind_1.4-8           
+##  [31] Rtsne_0.17             purrr_1.0.4            circlize_0.4.16       
+##  [34] IRanges_2.40.1         S4Vectors_0.44.0       ggrepel_0.9.6         
+##  [37] irlba_2.3.5.1          listenv_0.9.1          spatstat.utils_3.1-2  
+##  [40] goftest_1.2-3          RSpectra_0.16-2        spatstat.random_3.3-2 
+##  [43] fitdistrplus_1.2-2     parallelly_1.42.0      svglite_2.1.3         
+##  [46] codetools_0.2-19       tidyselect_1.2.1       shape_1.4.6.1         
+##  [49] farver_2.1.2           matrixStats_1.5.0      stats4_4.4.3          
+##  [52] spatstat.explore_3.3-4 jsonlite_1.9.0         GetoptLong_1.0.5      
+##  [55] BiocNeighbors_2.0.1    progressr_0.15.1       Formula_1.2-5         
+##  [58] ggridges_0.5.6         ggalluvial_0.12.5      survival_3.8-3        
+##  [61] iterators_1.0.14       systemfonts_1.2.1      foreach_1.5.2         
+##  [64] tools_4.4.3            sna_2.8                ica_1.0-3             
+##  [67] Rcpp_1.0.14            glue_1.8.0             gridExtra_2.3         
+##  [70] xfun_0.51              withr_3.0.2            BiocManager_1.30.25   
+##  [73] fastmap_1.2.0          digest_0.6.37          R6_2.6.1              
+##  [76] mime_0.12              colorspace_2.1-1       scattermore_1.2       
+##  [79] tensor_1.5             spatstat.data_3.1-4    tidyr_1.3.1           
+##  [82] generics_0.1.3         data.table_1.17.0      FNN_1.1.4.1           
+##  [85] httr_1.4.7             htmlwidgets_1.6.4      uwot_0.2.3            
+##  [88] pkgconfig_2.0.3        gtable_0.3.6           registry_0.5-1        
+##  [91] ComplexHeatmap_2.22.0  lmtest_0.9-40          htmltools_0.5.8.1     
+##  [94] carData_3.0-5          dotCall64_1.2          bookdown_0.42         
+##  [97] clue_0.3-66            scales_1.3.0           png_0.1-8             
+## [100] spatstat.univar_3.1-1  knitr_1.49             rstudioapi_0.17.1     
+## [103] reshape2_1.4.4         rjson_0.2.23           coda_0.19-4.1         
+## [106] statnet.common_4.11.0  nlme_3.1-168           cachem_1.1.0          
+## [109] zoo_1.8-13             GlobalOptions_0.1.2    stringr_1.5.1         
+## [112] KernSmooth_2.23-26     parallel_4.4.3         miniUI_0.1.1.1        
+## [115] pillar_1.10.1          grid_4.4.3             vctrs_0.6.5           
+## [118] RANN_2.6.2             promises_1.3.2         ggpubr_0.6.0          
+## [121] car_3.1-3              xtable_1.8-4           cluster_2.1.8.1       
+## [124] evaluate_1.0.3         cli_3.6.4              compiler_4.4.3        
+## [127] rlang_1.1.5            crayon_1.5.3           rngtools_1.5.2        
+## [130] future.apply_1.11.3    ggsignif_0.6.4         plyr_1.8.9            
+## [133] stringi_1.8.4          viridisLite_0.4.2      network_1.19.0        
+## [136] deldir_2.0-4           gridBase_0.4-7         munsell_0.5.1         
+## [139] lazyeval_0.2.2         spatstat.geom_3.3-5    Matrix_1.7-2          
+## [142] RcppHNSW_0.6.0         future_1.34.0          shiny_1.10.0          
+## [145] ROCR_1.0-11            broom_1.0.7            bslib_0.9.0</code></pre>
+
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="spatially-variable-genes-svgs-discovery-with-spark-x.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="future-directions-and-conclusion.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+  "sharing": {
+    "github": false,
+    "facebook": true,
+    "twitter": true,
+    "linkedin": false,
+    "weibo": false,
+    "instapaper": false,
+    "vk": false,
+    "whatsapp": false,
+    "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+  },
+  "fontsettings": {
+    "theme": "white",
+    "family": "sans",
+    "size": 2
+  },
+  "edit": {
+    "link": "https://github.com/USERNAME/REPO/edit/BRANCH/05-CCC.Rmd",
+    "text": "Edit"
+  },
+  "history": {
+    "link": null,
+    "text": null
+  },
+  "view": {
+    "link": null,
+    "text": null
+  },
+  "download": ["_main.pdf", "_main.epub"],
+  "search": {
+    "engine": "fuse",
+    "options": null
+  },
+  "toc": {
+    "collapse": "subsection"
+  }
+});
+});
+</script>
+
+</body>
+
+</html>
