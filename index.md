@@ -1,7 +1,7 @@
 ---
 title: "A Gentle Introduction to Spatial Transcriptomics Analysis"
 author: "Jessica Gillespie"
-date: "2025-04-05"
+date: "2025-04-07"
 site: bookdown::bookdown_site
 documentclass: book
 link-citations: yes

@@ -81,7 +81,7 @@ ggsave(filename = paste0(figs_dir, "/Figure_clust_", fig_num, ".png"), plot = wr
 fig_num = fig_num + 1
 ```
 
-Based on Figure 2, we use the `subset` function to select samples with a mitochondrial percent < 30 and a feature count < 50,000.
+Based on the plots above, we use the `subset` function to select samples with a mitochondrial percent < 30 and a feature count < 50,000.
 
 
 ``` r
@@ -144,19 +144,19 @@ brain_ant <- RunUMAP(brain_ant, reduction = "pca", dims = 1:30)
 ```
 
 ```
-## 09:29:18 UMAP embedding parameters a = 0.9922 b = 1.112
+## 04:18:50 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 09:29:18 Read 2779 rows and found 30 numeric columns
+## 04:18:50 Read 2779 rows and found 30 numeric columns
 ```
 
 ```
-## 09:29:18 Using Annoy for neighbor search, n_neighbors = 30
+## 04:18:50 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 09:29:18 Building Annoy index with metric = cosine, n_trees = 50
+## 04:18:50 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -169,19 +169,19 @@ brain_ant <- RunUMAP(brain_ant, reduction = "pca", dims = 1:30)
 
 ```
 ## **************************************************|
-## 09:29:18 Writing NN index file to temp file /tmp/Rtmpl7t7cx/file1931c18242605
-## 09:29:18 Searching Annoy index using 1 thread, search_k = 3000
-## 09:29:18 Annoy recall = 100%
-## 09:29:19 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-## 09:29:19 Initializing from normalized Laplacian + noise (using RSpectra)
-## 09:29:20 Commencing optimization for 500 epochs, with 109402 positive edges
-## 09:29:20 Using rng type: pcg
-## 09:29:22 Optimization finished
+## 04:18:50 Writing NN index file to temp file /tmp/RtmpBB83Wh/file17d134de6e26
+## 04:18:50 Searching Annoy index using 1 thread, search_k = 3000
+## 04:18:50 Annoy recall = 100%
+## 04:18:51 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+## 04:18:52 Initializing from normalized Laplacian + noise (using RSpectra)
+## 04:18:52 Commencing optimization for 500 epochs, with 109402 positive edges
+## 04:18:52 Using rng type: pcg
+## 04:18:54 Optimization finished
 ```
 
 ## Visualizing Clusters
 
-There are a few options for visualization of our clusters. First, a traditional UMAP plot showing our clustering results with this `DimPlot` function (Figure 4a). `SpatialDimPlot` will show the distribution of identified clusters by overlaying them onto our tissue image. Giving `SpatialDimPlot` a few cluster identities allows us to highlight the location of selected clusters (Figure 4b).
+There are a few options for visualization of our clusters. First, a traditional UMAP plot showing our clustering results with this `DimPlot` function. `SpatialDimPlot` will show the distribution of identified clusters by overlaying them onto our tissue image. Giving `SpatialDimPlot` a few cluster identities allows us to highlight the location of selected clusters.
 
 Again, these are ggplot objects that can be customized using the ggplot2 package.
 
@@ -214,7 +214,7 @@ fig_num = fig_num + 1
 
 A final step required is to annotate our clusters by assigning them cell types. This process is not single-cell resolution as our clusters consist of “spots” that contain several cells each (a characteristic of the 10X Visium platform used here). Deconvolution is needed to estimate individual cell types in each spot and is a separate step.
 
-While there are automated methods to do this, they are far from perfect, and the best way to annotate your samples is to have domain knowledge of markers that indicate cell types. If particular markers are known, expression can be viewed by cluster via a violin plot to assist in confirming. Several methods exist to perform this step. `SingleR` with `celldex` is a popular method. Another method is `Azimuth`. Here, we will use Sc-Type. The `run_sctype` function has built-in references if we provide “Brain” as the tissue type. Note that this reference is currently only for human tissue so the match will not be perfect for our data here. We can then show the new cluster assignments using `DimPlot` and `SpatialDimPlot` (Figure 5).
+While there are automated methods to do this, they are far from perfect, and the best way to annotate your samples is to have domain knowledge of markers that indicate cell types. If particular markers are known, expression can be viewed by cluster via a violin plot to assist in confirming. Several methods exist to perform this step. `SingleR` with `celldex` is a popular method. Another method is `Azimuth`. Here, we will use Sc-Type. The `run_sctype` function has built-in references if we provide “Brain” as the tissue type. Note that this reference is currently only for human tissue so the match will not be perfect for our data here. We can then show the new cluster assignments using `DimPlot` and `SpatialDimPlot`.
 
 
 ``` r

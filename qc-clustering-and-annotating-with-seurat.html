@@ -23,7 +23,7 @@
 <meta name="author" content="Jessica Gillespie" />
 
 
-<meta name="date" content="2025-04-05" />
+<meta name="date" content="2025-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -273,7 +273,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="03-Clustering_files/figure-html/feature_check-2.png" width="672" /></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="qc-clustering-and-annotating-with-seurat.html#cb11-1" tabindex="-1"></a><span class="fu">ggsave</span>(<span class="at">filename =</span> <span class="fu">paste0</span>(figs_dir, <span class="st">&quot;/Figure_clust_&quot;</span>, fig_num, <span class="st">&quot;.png&quot;</span>), <span class="at">plot =</span> <span class="fu">wrap_plots</span>(figa, figb, figc), <span class="at">units =</span> <span class="st">&quot;in&quot;</span>, <span class="at">width =</span> two_panel <span class="sc">*</span> (<span class="dv">7</span><span class="sc">/</span><span class="dv">4</span>), <span class="at">height =</span> two_panel, <span class="at">dpi =</span> <span class="dv">300</span>)</span>
 <span id="cb11-2"><a href="qc-clustering-and-annotating-with-seurat.html#cb11-2" tabindex="-1"></a>fig_num <span class="ot">=</span> fig_num <span class="sc">+</span> <span class="dv">1</span></span></code></pre></div>
-<p>Based on Figure 2, we use the <code>subset</code> function to select samples with a mitochondrial percent &lt; 30 and a feature count &lt; 50,000.</p>
+<p>Based on the plots above, we use the <code>subset</code> function to select samples with a mitochondrial percent &lt; 30 and a feature count &lt; 50,000.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="qc-clustering-and-annotating-with-seurat.html#cb12-1" tabindex="-1"></a>brain_ant <span class="ot">&lt;-</span> <span class="fu">subset</span>(brain_ant, </span>
 <span id="cb12-2"><a href="qc-clustering-and-annotating-with-seurat.html#cb12-2" tabindex="-1"></a>                    <span class="at">subset =</span> percent.mt <span class="sc">&lt;</span> <span class="dv">30</span> <span class="sc">&amp;</span> nCount_Spatial <span class="sc">&lt;</span> <span class="dv">50000</span>)</span></code></pre></div>
 </div>
@@ -305,25 +305,25 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <pre><code>## Computing SNN</code></pre>
 <div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="qc-clustering-and-annotating-with-seurat.html#cb19-1" tabindex="-1"></a>brain_ant <span class="ot">&lt;-</span> <span class="fu">FindClusters</span>(brain_ant, <span class="at">verbose =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb19-2"><a href="qc-clustering-and-annotating-with-seurat.html#cb19-2" tabindex="-1"></a>brain_ant <span class="ot">&lt;-</span> <span class="fu">RunUMAP</span>(brain_ant, <span class="at">reduction =</span> <span class="st">&quot;pca&quot;</span>, <span class="at">dims =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>)</span></code></pre></div>
-<pre><code>## 09:29:18 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
-<pre><code>## 09:29:18 Read 2779 rows and found 30 numeric columns</code></pre>
-<pre><code>## 09:29:18 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
-<pre><code>## 09:29:18 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
+<pre><code>## 04:18:50 UMAP embedding parameters a = 0.9922 b = 1.112</code></pre>
+<pre><code>## 04:18:50 Read 2779 rows and found 30 numeric columns</code></pre>
+<pre><code>## 04:18:50 Using Annoy for neighbor search, n_neighbors = 30</code></pre>
+<pre><code>## 04:18:50 Building Annoy index with metric = cosine, n_trees = 50</code></pre>
 <pre><code>## 0%   10   20   30   40   50   60   70   80   90   100%</code></pre>
 <pre><code>## [----|----|----|----|----|----|----|----|----|----|</code></pre>
 <pre><code>## **************************************************|
-## 09:29:18 Writing NN index file to temp file /tmp/Rtmpl7t7cx/file1931c18242605
-## 09:29:18 Searching Annoy index using 1 thread, search_k = 3000
-## 09:29:18 Annoy recall = 100%
-## 09:29:19 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-## 09:29:19 Initializing from normalized Laplacian + noise (using RSpectra)
-## 09:29:20 Commencing optimization for 500 epochs, with 109402 positive edges
-## 09:29:20 Using rng type: pcg
-## 09:29:22 Optimization finished</code></pre>
+## 04:18:50 Writing NN index file to temp file /tmp/RtmpBB83Wh/file17d134de6e26
+## 04:18:50 Searching Annoy index using 1 thread, search_k = 3000
+## 04:18:50 Annoy recall = 100%
+## 04:18:51 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+## 04:18:52 Initializing from normalized Laplacian + noise (using RSpectra)
+## 04:18:52 Commencing optimization for 500 epochs, with 109402 positive edges
+## 04:18:52 Using rng type: pcg
+## 04:18:54 Optimization finished</code></pre>
 </div>
 <div id="visualizing-clusters" class="section level2 hasAnchor" number="4.4">
 <h2><span class="header-section-number">4.4</span> Visualizing Clusters<a href="qc-clustering-and-annotating-with-seurat.html#visualizing-clusters" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>There are a few options for visualization of our clusters. First, a traditional UMAP plot showing our clustering results with this <code>DimPlot</code> function (Figure 4a). <code>SpatialDimPlot</code> will show the distribution of identified clusters by overlaying them onto our tissue image. Giving <code>SpatialDimPlot</code> a few cluster identities allows us to highlight the location of selected clusters (Figure 4b).</p>
+<p>There are a few options for visualization of our clusters. First, a traditional UMAP plot showing our clustering results with this <code>DimPlot</code> function. <code>SpatialDimPlot</code> will show the distribution of identified clusters by overlaying them onto our tissue image. Giving <code>SpatialDimPlot</code> a few cluster identities allows us to highlight the location of selected clusters.</p>
 <p>Again, these are ggplot objects that can be customized using the ggplot2 package.</p>
 <div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="qc-clustering-and-annotating-with-seurat.html#cb27-1" tabindex="-1"></a>figa <span class="ot">&lt;-</span> <span class="fu">DimPlot</span>(brain_ant, <span class="at">reduction =</span> <span class="st">&quot;umap&quot;</span>, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
 <span id="cb27-2"><a href="qc-clustering-and-annotating-with-seurat.html#cb27-2" tabindex="-1"></a>                <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">&quot;A&quot;</span>) <span class="sc">+</span></span>
@@ -346,7 +346,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div id="spot-annotating" class="section level2 hasAnchor" number="4.5">
 <h2><span class="header-section-number">4.5</span> Spot Annotating<a href="qc-clustering-and-annotating-with-seurat.html#spot-annotating" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>A final step required is to annotate our clusters by assigning them cell types. This process is not single-cell resolution as our clusters consist of “spots” that contain several cells each (a characteristic of the 10X Visium platform used here). Deconvolution is needed to estimate individual cell types in each spot and is a separate step.</p>
-<p>While there are automated methods to do this, they are far from perfect, and the best way to annotate your samples is to have domain knowledge of markers that indicate cell types. If particular markers are known, expression can be viewed by cluster via a violin plot to assist in confirming. Several methods exist to perform this step. <code>SingleR</code> with <code>celldex</code> is a popular method. Another method is <code>Azimuth</code>. Here, we will use Sc-Type. The <code>run_sctype</code> function has built-in references if we provide “Brain” as the tissue type. Note that this reference is currently only for human tissue so the match will not be perfect for our data here. We can then show the new cluster assignments using <code>DimPlot</code> and <code>SpatialDimPlot</code> (Figure 5).</p>
+<p>While there are automated methods to do this, they are far from perfect, and the best way to annotate your samples is to have domain knowledge of markers that indicate cell types. If particular markers are known, expression can be viewed by cluster via a violin plot to assist in confirming. Several methods exist to perform this step. <code>SingleR</code> with <code>celldex</code> is a popular method. Another method is <code>Azimuth</code>. Here, we will use Sc-Type. The <code>run_sctype</code> function has built-in references if we provide “Brain” as the tissue type. Note that this reference is currently only for human tissue so the match will not be perfect for our data here. We can then show the new cluster assignments using <code>DimPlot</code> and <code>SpatialDimPlot</code>.</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="qc-clustering-and-annotating-with-seurat.html#cb29-1" tabindex="-1"></a>brain_ant <span class="ot">&lt;-</span> <span class="fu">run_sctype</span>(brain_ant, <span class="at">assay =</span> <span class="st">&quot;SCT&quot;</span>, <span class="at">scaled =</span> <span class="cn">TRUE</span>,</span>
 <span id="cb29-2"><a href="qc-clustering-and-annotating-with-seurat.html#cb29-2" tabindex="-1"></a>                     <span class="at">known_tissue_type=</span><span class="st">&quot;Brain&quot;</span>, <span class="at">name=</span><span class="st">&quot;sctype_classification&quot;</span>)</span></code></pre></div>
 <pre><code>## [1] &quot;Using Seurat v4 object&quot;

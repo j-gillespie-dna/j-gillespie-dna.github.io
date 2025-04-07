@@ -4,7 +4,7 @@
 
 Cells communicate by releasing and receiving molecular messages called ligands. Ligands bind to receptors, often found on cell surfaces. This binding then activates a reaction or pathway that leads to a cell function. Due to decades of research, we know which ligands typically bind to which receptors. Thanks to the scRNA-seq data for our sample we know which cells are expressing either the ligand or receptor in a canonical communication pair. As we also have spatial data available, we can use statistics to predict which cells are most likely communicating with one another based on ligand-receptor gene expression and physical distance from one another.
 
-One factor that heavily influences the results of any CCC analysis is the ligand-receptor database used. Indeed the same method can return two drastically different results merely by working from two different ligand-receptor pair lists. CellChat has its own database, CellChatDB, which is manually curated and takes into account things like subunit structure and regulatory pathways. The database is not exhaustive, however, and some ligand-receptor pairs may be missing. Users are able to update the database following the instructions [here](https://htmlpreview.github.io/?https://github.com/jinworks/CellChat/blob/master/tutorial/Update-CellChatDB.html])
+One factor that heavily influences the results of any CCC analysis is the ligand-receptor database used. Indeed the same method can return two drastically different results merely by working from two different ligand-receptor pair lists. CellChat has its own database, CellChatDB, which is manually curated and takes into account things like subunit structure and regulatory pathways. The database is not exhaustive, however, and some ligand-receptor pairs may be missing. Users are able to update the database following the instructions [here](https://htmlpreview.github.io/?https://github.com/jinworks/CellChat/blob/master/tutorial/Update-CellChatDB.html)
 
 Another important factor is your annotations previously added in the Clustering step. CellChat will group samples by these annotations to determine which groups are potentially communicating with one another. Be sure your sample is well annotated to obtain the most accurate communication network.
 
@@ -222,7 +222,7 @@ netVisual_heatmap(cellChat, measure = "weight", color.heatmap = "Blues")
 
 <img src="05-CCC_files/figure-html/vis_full-4.png" width="672" />
 
-If we are interested in a particular signaling pathway, a list of communication probabilities is available in the CellChat object metadata. We can look at the probability of interactions between cell groups involved in the NOTCH pathway with the `netVisual_aggregate` function (Figure 8).
+If we are interested in a particular signaling pathway, a list of communication probabilities is available in the CellChat object metadata. We can look at the probability of interactions between cell groups involved in the NOTCH pathway with the `netVisual_aggregate` function.
 
 
 ``` r
@@ -290,7 +290,7 @@ netVisual_aggregate(cellChat, signaling = pathways.show, layout = "circle")
 
 <img src="05-CCC_files/figure-html/vis_path-1.png" width="672" />
 
-Finally, we can explore the "centrality" of a network. This tells us which nodes are active in the most pathways and therefore could be more "important". The calculation is done with “netAnalysis_computeCentrality” and visualized with `netAnalysis_signalingRole_network` (Figure 9).
+Finally, we can explore the "centrality" of a network. This tells us which nodes are active in the most pathways and therefore could be more "important". The calculation is done with “netAnalysis_computeCentrality” and visualized with `netAnalysis_signalingRole_network`.
 
 
 ``` r

@@ -23,7 +23,7 @@
 <meta name="author" content="Jessica Gillespie" />
 
 
-<meta name="date" content="2025-04-05" />
+<meta name="date" content="2025-04-07" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -266,7 +266,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 <div id="visualizing-svgs" class="section level2 hasAnchor" number="5.3">
 <h2><span class="header-section-number">5.3</span> Visualizing SVGs<a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#visualizing-svgs" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Now that we have a list of spatially variable genes, we can look at them across our tissue sample using the Seurat <code>SpatialFeaturePlot</code>. Here we look at the top 10 most significantly spatially variable genes (Figure 6).</p>
+<p>Now that we have a list of spatially variable genes, we can look at them across our tissue sample using the Seurat <code>SpatialFeaturePlot</code>. Here we look at the top 10 most significantly spatially variable genes.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#cb40-1" tabindex="-1"></a>top10 <span class="ot">&lt;-</span> brain_spark<span class="sc">$</span>res_mtest <span class="sc">%&gt;%</span></span>
 <span id="cb40-2"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#cb40-2" tabindex="-1"></a>          <span class="fu">filter</span>(<span class="fu">between</span>(adjustedPval, <span class="dv">0</span>, <span class="fl">0.05</span>)) <span class="sc">%&gt;%</span></span>
 <span id="cb40-3"><a href="spatially-variable-genes-svgs-discovery-with-spark-x.html#cb40-3" tabindex="-1"></a>          <span class="fu">top_n</span>(<span class="sc">-</span><span class="dv">10</span>, adjustedPval)</span>

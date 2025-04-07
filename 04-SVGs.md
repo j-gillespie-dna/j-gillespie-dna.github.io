@@ -69,7 +69,7 @@ brain_spark <- sparkx(raw_counts, brain_coord, option = 'mixture')
 
 ## Visualizing SVGs
 
-Now that we have a list of spatially variable genes, we can look at them across our tissue sample using the Seurat `SpatialFeaturePlot`. Here we look at the top 10 most significantly spatially variable genes (Figure 6).
+Now that we have a list of spatially variable genes, we can look at them across our tissue sample using the Seurat `SpatialFeaturePlot`. Here we look at the top 10 most significantly spatially variable genes.
 
 
 ``` r
