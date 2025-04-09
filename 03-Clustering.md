@@ -30,7 +30,7 @@ one_pnael = two_panel/2
 fig_num = 1
 ```
 
-## Import and QC
+## Importing and QC
 
 ### Load in the data
 
@@ -98,7 +98,7 @@ Next we need to normalize the data using SCTransform. Normalization is a common 
 brain_ant <- SCTransform(brain_ant, assay = "Spatial", verbose = FALSE)
 ```
 
-## Visualize Gene Expression
+## Visualizing Gene Expression
 
 Now that we have normalized gene expression, we can visualize this on the tissue sample image. Depending on the tissue under study and our goals, it may be interesting to pick a marker that can distinguish the anatomical structure of the sample. This plot overlays the expression of chosen genes over the provided tissue H&E image. We can see that the expression is not heterogeneous for all genes. In the next section, we will use a method to find out which expressions vary significantly across the tissue.
 
@@ -120,7 +120,7 @@ ggsave(filename = paste0(figs_dir, "/Figure_clust_", fig_num, ".png"), plot = fi
 fig_num = fig_num + 1
 ```
 
-## Dimention Reduction and Cluster
+## Dimention Reduction and Clustering
 
 When clustering, any number of variables can be considered. However, it is not necessary to include ALL variables as some contribute very little overall or even add noise. Dimension reduction pairs down the parameter list to only those that contribute meaningfully to the analysis. This is achieved here by using `RunPCA` on the transformed data. Now we can group cells using `FindNeighbors`, `FindClusters`, and `RunUMAP`. Briefly, Seurat uses a graph-based approach to clustering starting with a K-Nearest Neighbors graph based on the PCA space, then uses a Louvian algorithm to cluster the cells before a final non-linear dimensional reduction is performed with UMAP.
 
@@ -144,19 +144,19 @@ brain_ant <- RunUMAP(brain_ant, reduction = "pca", dims = 1:30)
 ```
 
 ```
-## 04:18:50 UMAP embedding parameters a = 0.9922 b = 1.112
+## 11:55:42 UMAP embedding parameters a = 0.9922 b = 1.112
 ```
 
 ```
-## 04:18:50 Read 2779 rows and found 30 numeric columns
+## 11:55:42 Read 2779 rows and found 30 numeric columns
 ```
 
 ```
-## 04:18:50 Using Annoy for neighbor search, n_neighbors = 30
+## 11:55:42 Using Annoy for neighbor search, n_neighbors = 30
 ```
 
 ```
-## 04:18:50 Building Annoy index with metric = cosine, n_trees = 50
+## 11:55:42 Building Annoy index with metric = cosine, n_trees = 50
 ```
 
 ```
@@ -169,14 +169,14 @@ brain_ant <- RunUMAP(brain_ant, reduction = "pca", dims = 1:30)
 
 ```
 ## **************************************************|
-## 04:18:50 Writing NN index file to temp file /tmp/RtmpBB83Wh/file17d134de6e26
-## 04:18:50 Searching Annoy index using 1 thread, search_k = 3000
-## 04:18:50 Annoy recall = 100%
-## 04:18:51 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
-## 04:18:52 Initializing from normalized Laplacian + noise (using RSpectra)
-## 04:18:52 Commencing optimization for 500 epochs, with 109402 positive edges
-## 04:18:52 Using rng type: pcg
-## 04:18:54 Optimization finished
+## 11:55:42 Writing NN index file to temp file /tmp/Rtmp9odOJO/fileab8976572a8d
+## 11:55:42 Searching Annoy index using 1 thread, search_k = 3000
+## 11:55:43 Annoy recall = 100%
+## 11:55:43 Commencing smooth kNN distance calibration using 1 thread with target n_neighbors = 30
+## 11:55:44 Initializing from normalized Laplacian + noise (using RSpectra)
+## 11:55:44 Commencing optimization for 500 epochs, with 109402 positive edges
+## 11:55:44 Using rng type: pcg
+## 11:55:47 Optimization finished
 ```
 
 ## Visualizing Clusters
@@ -254,7 +254,7 @@ ggsave(filename = paste0(figs_dir, "/Figure_clust_", fig_num, ".png"),
 fig_num = fig_num + 1
 ```
 
-## Save the data
+## Saving the data
 
 Finally, we save the Seurat object with `saveRDS`. This file can be loaded again to add other annotations or create more figures without having to repeat the analysis. This same object will also serve as the starting point in subsequent steps.
 

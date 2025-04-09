@@ -40,7 +40,7 @@ raw_counts <- GetAssayData(brain_ant, layer = "counts", assay = "Spatial")
 brain_coord <- GetTissueCoordinates(brain_ant)[,c("x","y")]
 ```
 
-## Run SPARK-X
+## Running SPARK-X
 
 With a single `sparkx` command, spatial information and gene expression are used to determine which gene’s expression differs by tissue area.
 
@@ -97,7 +97,7 @@ ggsave(filename = paste0(fig_dir, "/Figure_svg_", fig_num, ".png"), plot = fig_2
 fig_num <- fig_num + 1
 ```
 
-## Save Data
+## Saving Data
 
 We can save our SPARK-X output to an rds file for quick loading to look at specific data or create new figures.
 

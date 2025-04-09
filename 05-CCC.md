@@ -94,7 +94,7 @@ CellChatDB.use <- CellChatDB
 cellChat@DB <- CellChatDB.use
 ```
 
-## Run CellChat
+## Running CellChat
 
 Before finding all ligand-receptor pairs, over-expressed genes and interactions are found to infer the cell state-specific communications using `identifyOverExpressedGenes` and `identifyOverExpressedInteractions` respectively. If the sequencing depth is shallow, we can use `smoothData` to smooth genes' expressions based on neighbors' validated and high-confidence protein-protein network. If smoothing is used, the parameter `raw = FALSE` should be added to the `computeCommunProb` function.
 
@@ -125,7 +125,7 @@ cellChat <- aggregateNet(cellChat)
 saveRDS(cellChat, file = paste0(data_dir, "/cellchat_visium_mouse_cortex.rds"))
 ```
 
-## Visualization
+## Visualizing CCC
 
 There are many figures and graphs that can be created for CCC analysis. First, using `netVisual-circle`, we can view communications between each cell group of cells from the clustering step. The vertex and line weights can be set to a number of parameters, including the number of interactions and the strength of the interactions. The same information can alternatively be viewed as heatmaps using “netVisual_heatmap”.
 

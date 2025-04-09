@@ -1,7 +1,7 @@
 ---
 title: "A Gentle Introduction to Spatial Transcriptomics Analysis"
 author: "Jessica Gillespie"
-date: "2025-04-07"
+date: "2025-04-09"
 site: bookdown::bookdown_site
 documentclass: book
 link-citations: yes
@@ -11,9 +11,7 @@ output: html_document
 
 
 # Welcome!
-Future home of a simple, (hopefully) easy to understand spatial transcriptomics analysis pipeline for those who have never before done ST analysis.
-
-This started as part of my masters thesis but has been continued as a way to provide some guidance to all of those trying to teach themselves a new NGS analysis techniques. The first version of this protocol will soon be published (pending link).
+This started as part of my masters thesis but has been continued as a way to provide some guidance to all of those trying to teach themselves a new NGS analysis techniques. If you would like to download the files used to create this protocol (including the figures) check out the [GitHub](https://github.com/j-gillespie-dna/STanalysis)
 
 ## Who is this NOT for
 This protocol is not for anyone with extensive ST analysis experience. We will not be discussing intricate details or highly technical aspects beyond general notes to new users or "tips and tricks".
